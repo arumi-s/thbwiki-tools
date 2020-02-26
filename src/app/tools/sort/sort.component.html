@@ -1,0 +1,20 @@
+<div class="text-fields">
+	<div class="text-field">
+		<label for="param-name">排序参数：</label>
+		<select id="param-name" [(ngModel)]="name">
+			<option *ngFor="let param of params" [value]="param[0]">{{ param[0] }} ({{ param[1] }})</option>
+		</select>
+	</div>
+	<div class="text-field">
+		<label for="param-name">排序方法：</label>
+		<select id="param-name" [(ngModel)]="method">
+			<option *ngFor="let value of methods" [value]="value">{{ value }}</option>
+		</select>
+	</div>
+</div>
+<div class="result">
+	模板列表：
+	<button (click)="sort()">排序</button>
+	<button [ngxClipboard]="resultText">复制</button>
+	<textarea type="text" rows="50" [(ngModel)]="text" #resultText (change)="updateParams()"></textarea>
+</div>

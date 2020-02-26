@@ -27,7 +27,10 @@ const routes: Routes = [
 		path: 'textcolor',
 		loadChildren: () => import('./tools/textcolor/textcolor.module').then(m => m.TextcolorModule)
 	},
-
+	{
+		path: 'sort',
+		loadChildren: () => import('./tools/sort/sort.module').then(m => m.SortModule)
+	},
 	{
 		path: '**',
 		canActivate: [RedirectGuard],
