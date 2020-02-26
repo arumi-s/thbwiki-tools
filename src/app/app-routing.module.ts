@@ -1,11 +1,39 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
+/*
+https://tool.thwiki.cc/calLine.html
+https://tool.thwiki.cc/lrctowiki.html
+https://tool.thwiki.cc/textcolor.html
+*/
 
-const routes: Routes = [];
+const routes: Routes = [
+	{
+		path: '',
+		pathMatch: 'full',
+		component: HomeComponent
+	},
+	{
+		path: 'lrctowiki',
+		loadChildren: () => import('./tools/lrctowiki/lrctowiki.module').then(m => m.LrctowikiModule)
+	},
+	{
+		path: 'calline',
+		loadChildren: () => import('./tools/calline/calline.module').then(m => m.CallineModule)
+	},
+	{
+		path: 'textcolor',
+		loadChildren: () => import('./tools/textcolor/textcolor.module').then(m => m.TextcolorModule)
+	},
+	{
+		path: '**',
+		redirectTo: ''
+	}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

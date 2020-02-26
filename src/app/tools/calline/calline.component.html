@@ -1,0 +1,66 @@
+请在表单中输入每个图片的宽和高，一个格子中输入一个，然后在下面输入参考高度，即可计算结果宽度。<br />
+<br />
+自动读取图片宽高：
+<br />
+<div class="drop" (dragover)="dragover($event)" (dragleave)="dragleave($event)" (drop)="dropImage($event)">拖放图片</div>
+<label class="file">
+	选取图片
+	<input type="file" name="image" accept="image/*" multiple="multiple" (change)="loadImage($event)" />
+</label>
+<br />
+或输入每个图片的宽和高：
+<table>
+	<thead>
+		<tr>
+			<th>宽</th>
+			<th>高</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let dimension of dimensions; let index = index">
+			<td>
+				<input
+					type="number"
+					min="1"
+					step="1"
+					max="10000"
+					[(ngModel)]="dimension[0]"
+					(change)="index >= dimensions.length - 2 ? addnew() : null"
+				/>
+			</td>
+			<td>
+				<input
+					type="number"
+					min="1"
+					step="1"
+					max="10000"
+					[(ngModel)]="dimension[1]"
+					(change)="index >= dimensions.length - 2 ? addnew() : null"
+				/>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td>
+				输入基准的高：
+			</td>
+			<td>
+				<input type="number" min="1" step="1" max="10000" [(ngModel)]="baseline" />
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<button (click)="calc()">计算</button><br />
+				<button (click)="clear()">清空</button>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+<ol>
+	<li *ngFor="let result of results">{{ result }}</li>
+</ol>
+<div class="demo">
+	<div class="block" *ngFor="let result of results" [style.flex-grow]="result">{{ result }}</div>
+</div>

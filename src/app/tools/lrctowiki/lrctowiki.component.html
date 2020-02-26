@@ -1,0 +1,35 @@
+<div>
+	选择歌词的主要语言：
+	<label><input type="radio" name="language" value="ja" [(ngModel)]="language" />日文</label>
+	<label><input type="radio" name="language" value="en" [(ngModel)]="language" />英文</label>
+	<label><input type="radio" name="language" value="zh" [(ngModel)]="language" />中文</label>
+</div>
+<table>
+	<tr>
+		<th>原文</th>
+		<th>翻译（可选）</th>
+	</tr>
+	<tr>
+		<td><textarea rows="10" cols="40" [(ngModel)]="lrc"></textarea></td>
+		<td><textarea rows="10" cols="40" [(ngModel)]="tran"></textarea></td>
+	</tr>
+</table>
+
+<div>
+	在上方输入lrc文本然后按
+	<button (click)="convert()">转换</button>
+	，wiki文本会在下方出现
+</div>
+<div>如果只是没有时间轴的普通文本，请按 <button (click)="convertsim()">普通转换</button></div>
+<div>
+	<button [ngxClipboard]="wikiText">复制</button>
+</div>
+<textarea rows="30" cols="80" [(ngModel)]="wiki" #wikiText></textarea>
+<div>
+	注意：
+	<ul>
+		<li>只能选择歌词的主要语言，个别其他语言的句子需要手动处理</li>
+		<li>只能处理一行一句一个时间的简单语法</li>
+		<li>有时间轴的对照翻译要求对应句子时间轴完全相同</li>
+	</ul>
+</div>

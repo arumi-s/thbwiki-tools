@@ -1,0 +1,49 @@
+:host.block {
+	cursor: not-allowed;
+	cursor: no-drop;
+}
+:host.dragging {
+	cursor: grab;
+	cursor: grabbing;
+	.drop {
+		border-color: red;
+	}
+}
+
+input[type='number'] {
+	width: 10em;
+}
+
+.drop {
+	display: inline-block;
+	padding: 2em 10em;
+	border: 2px dotted #a9a9a9;
+	user-select: none;
+}
+
+.file {
+	display: inline-block;
+	border: 2px dotted #a9a9a9;
+	border-left: none;
+	padding: 2em;
+	cursor: pointer;
+	user-select: none;
+	input {
+		display: none;
+	}
+}
+
+.demo {
+	display: flex;
+}
+
+.block {
+	border-left: 2px solid #a9a9a9;
+	flex-basis: 0;
+	flex-shrink: 0;
+	text-align: center;
+	padding: 2em 0;
+	&:last-of-type {
+		border-right: 2px solid #a9a9a9;
+	}
+}

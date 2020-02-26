@@ -1,0 +1,27 @@
+<form [formGroup]="form" class="color-fields">
+	<div class="color-field">
+		背景色：
+		<div class="color-picker" ngxPickr (change)="update()" theme="nano" formControlName="background"></div>
+		<div class="color-text">{{ formColor(form.get('background')?.value) }}</div>
+	</div>
+	<div class="color-field">
+		起始色：
+		<div class="color-picker" ngxPickr (change)="update()" theme="nano" formControlName="start"></div>
+		<div class="color-text">{{ formColor(form.get('start')?.value) }}</div>
+	</div>
+	<div class="color-field">
+		结束色：
+		<div class="color-picker" ngxPickr (change)="update()" theme="nano" formControlName="end"></div>
+		<div class="color-text">{{ formColor(form.get('end')?.value) }}</div>
+	</div>
+</form>
+<div class="text-fields">
+	<label for="text-field">显示文字：</label><input id="text-field" type="text" [(ngModel)]="text" (input)="update()" />
+</div>
+<div class="result">
+	代码如下：
+	<button [ngxClipboard]="resultText">复制</button>
+	<textarea type="text" rows="10" [(ngModel)]="result" #resultText></textarea>
+</div>
+预览效果：
+<div class="preview" [innerHTML]="result | safehtml"></div>

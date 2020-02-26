@@ -1,0 +1,54 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+	font-size: 18px;
+}
+
+nav {
+	display: flex;
+	flex: auto 0 0;
+	text-align: center;
+	background-color: #fff;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+	padding: 0.5em;
+	justify-content: flex-end;
+	align-items: center;
+	z-index: 500;
+	& > a {
+		margin: 0 1vw;
+		flex-shrink: 0;
+		user-select: none;
+	}
+}
+
+.logo {
+	background-image: url(https://thwiki.cc/banner/banner_b1.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 220px;
+	height: 40px;
+	flex-shrink: 0;
+	margin-right: auto;
+	cursor: pointer;
+	&:hover {
+		background-image: url(https://thwiki.cc/banner/banner_r1.png);
+	}
+}
+
+main {
+	overflow: hidden;
+	flex: 0px 1 1;
+	& ::ng-deep > * {
+		display: block;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		padding: 1em;
+	}
+	router-outlet {
+		display: none;
+	}
+}
