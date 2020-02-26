@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { RedirectGuard } from './services/redirect-guard';
 
 /*
 https://tool.thwiki.cc/calLine.html
@@ -26,9 +27,11 @@ const routes: Routes = [
 		path: 'textcolor',
 		loadChildren: () => import('./tools/textcolor/textcolor.module').then(m => m.TextcolorModule)
 	},
+
 	{
 		path: '**',
-		redirectTo: ''
+		canActivate: [RedirectGuard],
+		component: HomeComponent
 	}
 ];
 
