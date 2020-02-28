@@ -1,4 +1,5 @@
 <nav>
 	<div class="logo" [routerLink]="['/']"></div>
+	<div class="title">{{ titleService.getTitle() }}</div>
 </nav>
 <main><router-outlet></router-outlet></main>

@@ -32,6 +32,10 @@ const routes: Routes = [
 		loadChildren: () => import('./tools/sort/sort.module').then(m => m.SortModule)
 	},
 	{
+		path: 'tracks',
+		loadChildren: () => import('./tools/tracks/tracks.module').then(m => m.TracksModule)
+	},
+	{
 		path: '**',
 		canActivate: [RedirectGuard],
 		component: HomeComponent

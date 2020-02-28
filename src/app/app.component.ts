@@ -10,11 +10,11 @@ import { Router, ActivatedRoute, NavigationEnd, RouterState } from '@angular/rou
 export class AppComponent {
 	title = 'THBWiki工具';
 
-	constructor(titleService: Title, router: Router) {
+	constructor(public titleService: Title, router: Router) {
 		router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				const title = this.getTitle(router.routerState, router.routerState.root).join('-');
-				titleService.setTitle(title === '' ? this.title : title);
+				this.titleService.setTitle(title === '' ? this.title : title);
 			}
 		});
 	}

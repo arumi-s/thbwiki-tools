@@ -1,0 +1,94 @@
+:host > * {
+	width: 600px;
+}
+
+.highlight {
+	color: red;
+}
+.support {
+	font-size: 90%;
+}
+.drop {
+	display: inline-block;
+	padding: 1em 2em;
+	text-align: center;
+	border: 2px dotted #a9a9a9;
+	user-select: none;
+	cursor: pointer;
+	&.dragging {
+		cursor: grab;
+		cursor: grabbing;
+		border-color: red;
+	}
+	.drop-or {
+		font-size: 75%;
+		display: flex;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		max-width: 32em;
+		margin: 0.2em auto;
+		&::before,
+		&::after {
+			content: '';
+			display: block;
+			height: 1px;
+			flex: 1;
+			background-color: #c4c4c4;
+			margin: 0 0.5em;
+		}
+	}
+	input {
+		display: none;
+	}
+}
+.progress {
+	text-align: center;
+}
+.logs {
+	padding: 1em 0;
+}
+.log {
+	font-size: 80%;
+}
+.tracks {
+	font-size: 80%;
+	table-layout: fixed;
+	border: 1px solid #a9a9a9;
+	th {
+		text-align: left;
+		padding: 0.2em 0.5em;
+		background-color: #ddd;
+	}
+	td {
+		padding: 0.2em 0.5em;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		&[colspan] {
+			text-align: center;
+		}
+	}
+}
+.track-no {
+	width: 10%;
+}
+.track-title {
+	width: 80%;
+}
+.track-duration {
+	width: 10%;
+}
+
+textarea {
+	width: 100%;
+	resize: vertical;
+}
+
+.result {
+	padding: 1em 0;
+}
+.clear {
+	float: right;
+}

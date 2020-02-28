@@ -2,10 +2,8 @@
 <br />
 自动读取图片宽高：
 <br />
-<div class="drop" (dragover)="dragover($event)" (dragleave)="dragleave($event)" (drop)="dropImage($event)">拖放图片</div>
-<label class="file">
-	选取图片
-	<input type="file" name="image" accept="image/*" multiple="multiple" (change)="loadImage($event)" />
+<label class="drop" dropfile (input)="addFiles($event)" accept="image/*" [multiple]="true" [allow]="allowImageType">
+	拖放或选取图片
 </label>
 <br />
 或输入每个图片的宽和高：

@@ -1,0 +1,37 @@
+<div class="support">支持格式：{{ supportFormats.join('、') }}</div>
+<label class="drop" dropfile (input)="dropFiles($event)" [multiple]="true">
+	按这里浏览<span class="highlight">音频文件</span>和<span class="highlight">CUE文件</span>
+	<div class="drop-or">或</div>
+	把<span class="highlight">音频文件</span>和<span class="highlight">CUE文件</span>一起拖曳到这里
+</label>
+<div *ngIf="loadingTotal > 0" class="progress">
+	{{ loadingTotal === loadingProgress ? '加载完成' : '正在加载' }}： {{ loadingProgress }} / {{ loadingTotal }} ({{
+		loadingProgress / loadingTotal | percent
+	}})
+</div>
+<div class="logs">
+	<div class="log" *ngFor="let log of logs">{{ log }}</div>
+</div>
+<table class="tracks">
+	<thead>
+		<th class="track-no">序号</th>
+		<th class="track-title">标题</th>
+		<th class="track-duration">时长</th>
+	</thead>
+	<tbody>
+		<tr *ngIf="tracks.length === 0">
+			<td colspan="3">无资料</td>
+		</tr>
+		<tr class="track" *ngFor="let track of tracks; let index = index">
+			<td>{{ index + 1 }}</td>
+			<td>{{ track.title }}</td>
+			<td [class.warning]="track.duration < 1">{{ track.getTime() }}</td>
+		</tr>
+	</tbody>
+</table>
+<div class="result">
+	<button class="insert" (click)="insert()">自动填写时长</button>
+	<button class="copy" [ngxClipboard]="resultText">复制Wiki代码</button>
+	<button class="clear" (click)="clear()">重置</button>
+	<textarea type="text" rows="20" [(ngModel)]="wikitext" #resultText></textarea>
+</div>

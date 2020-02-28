@@ -13,7 +13,6 @@ nav {
 	text-align: center;
 	background-color: #fff;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-	padding: 0.5em;
 	justify-content: flex-start;
 	align-items: center;
 	z-index: 500;
@@ -28,13 +27,23 @@ nav {
 	background-image: url(https://thwiki.cc/banner/banner_b1.png);
 	background-repeat: no-repeat;
 	background-size: contain;
+	background-position: center;
 	width: 220px;
-	height: 40px;
+	height: 60px;
 	flex-shrink: 0;
 	cursor: pointer;
-	&:hover {
+	&:hover,
+	&:active {
 		background-image: url(https://thwiki.cc/banner/banner_r1.png);
 	}
+	&:focus {
+		outline: none;
+	}
+}
+
+.title {
+	font-size: 90%;
+	color: #447edd;
 }
 
 main {
