@@ -6,7 +6,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: TracksComponent,
-		data: { title: '音频时长填写工具' }
+		data: { title: '曲目时长填写工具' }
 	}
 ];
 

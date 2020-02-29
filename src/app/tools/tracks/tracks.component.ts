@@ -60,16 +60,16 @@ export class TracksComponent implements OnInit {
 				const data = cues[index];
 				const match = tracks.findIndex(track => track instanceof Track && track.title === data.file);
 				if (match !== -1) {
-					tracks.push(...data.split((tracks.splice(match, 1)[0] as Track).duration));
+					results.push(...data.split((tracks.splice(match, 1)[0] as Track).duration));
 				} else {
 					this.logIn(`并未为CUE文件：${data.title}提供音频：${data.file}`);
-					tracks.push(...data.split(0));
+					results.push(...data.split(0));
 				}
 			}
 			tracks.forEach(track => {
 				track.title = track.title.slice(0, track.title.lastIndexOf('.'));
+				results.push(track);
 			});
-			results.push(...tracks);
 			if (results.length === 0) {
 				this.logIn('没有可读取的音频文件');
 				return;
