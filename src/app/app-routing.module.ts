@@ -3,12 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RedirectGuard } from './services/redirect-guard';
 
-/*
-https://tool.thwiki.cc/calLine.html
-https://tool.thwiki.cc/lrctowiki.html
-https://tool.thwiki.cc/textcolor.html
-*/
-
 const routes: Routes = [
 	{
 		path: '',
@@ -34,6 +28,10 @@ const routes: Routes = [
 	{
 		path: 'tracks',
 		loadChildren: () => import('./tools/tracks/tracks.module').then(m => m.TracksModule)
+	},
+	{
+		path: 'circlelyrics',
+		loadChildren: () => import('./tools/circlelyrics/circlelyrics.module').then(m => m.CirclelyricsModule)
 	},
 	{
 		path: '**',

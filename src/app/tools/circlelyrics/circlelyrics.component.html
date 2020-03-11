@@ -1,0 +1,19 @@
+<div class="text-field">
+	<label for="circle">社团名：</label>
+	<div class="circle-input">
+		<input id="circle" type="text" [ngModel]="circleInput$ | async" (input)="circleInput$.next($event.target.value)" />
+		<div class="dropdown-menu">
+			<button *ngFor="let sug of circleSuggest$ | async" class="dropdown-item" (click)="selectSuggest($event, sug)">{{ sug }}</button>
+		</div>
+	</div>
+	<button (click)="query()">查询</button>
+</div>
+<ul>
+	<li *ngFor="let page of list">
+		<a [href]="page.fullurlreal" [class.new]="!page.exists">{{ page.fulltext }}</a
+		>（<a *ngIf="page.exists" [href]="editUrl(page.fullurl)">编辑</a>
+		<a *ngFor="let album of page.albums" class="album" [href]="editUrl(album.fullurl)" [attr.title]="album.fulltext">编辑专辑</a>）
+	</li>
+</ul>
+<div *ngIf="loading" class="loading">加载中</div>
+<div *ngIf="!loading && list.length === 0" class="empty">无结果</div>

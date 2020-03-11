@@ -1,0 +1,55 @@
+ul {
+	font-size: 14px;
+}
+
+.text-field {
+	display: flex;
+	& > * {
+		margin: 0 0.2em;
+	}
+}
+
+.album {
+	padding: 0 4px;
+}
+
+.dropdown-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 10rem;
+	padding: 0.2em 0;
+	margin: 0;
+	font-size: 1em;
+	color: #212529;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	max-height: 10em;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+}
+.dropdown-item {
+	display: block;
+	width: 100%;
+	padding: 0.2em 0.5em;
+	clear: both;
+	text-align: inherit;
+	white-space: nowrap;
+	background-color: transparent;
+	border: 0;
+	cursor: pointer;
+}
+
+.circle-input:focus-within {
+	position: relative;
+	.dropdown-menu {
+		display: block !important;
+	}
+}

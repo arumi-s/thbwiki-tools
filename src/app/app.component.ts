@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute, NavigationEnd, RouterState } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, RouterState, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
@@ -8,13 +8,18 @@ import { Router, ActivatedRoute, NavigationEnd, RouterState } from '@angular/rou
 	styleUrls: ['./app.component.less']
 })
 export class AppComponent {
+	loading = false;
 	title = 'THBWiki工具';
 
 	constructor(public titleService: Title, router: Router) {
-		router.events.subscribe(event => {
+		router.events.subscribe((event: NavigationEnd | RouteConfigLoadStart | RouteConfigLoadEnd) => {
 			if (event instanceof NavigationEnd) {
 				const title = this.getTitle(router.routerState, router.routerState.root).join('-');
 				this.titleService.setTitle(title === '' ? this.title : title);
+			} else if (event instanceof RouteConfigLoadStart) {
+				this.loading = true;
+			} else if (event instanceof RouteConfigLoadEnd) {
+				this.loading = false;
 			}
 		});
 	}
