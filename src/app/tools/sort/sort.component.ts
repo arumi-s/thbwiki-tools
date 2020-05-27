@@ -63,7 +63,6 @@ export class SortComponent implements OnInit {
 	sort() {
 		this.templates.forEach(template => {
 			template.sorter = convertMethods[this.method](template.params[this.name] ?? '');
-			console.log(template.sorter);
 		});
 		this.templates.sort((a, b) => sortMethods[this.method](a.sorter, b.sorter));
 		let head = '';

@@ -9,13 +9,13 @@ import { Router, ActivatedRoute, NavigationEnd, RouterState, RouteConfigLoadStar
 })
 export class AppComponent {
 	loading = false;
-	title = 'THBWiki工具';
+	title = 'THBWiki工具箱';
 
 	constructor(public titleService: Title, router: Router) {
 		router.events.subscribe((event: NavigationEnd | RouteConfigLoadStart | RouteConfigLoadEnd) => {
 			if (event instanceof NavigationEnd) {
 				const title = this.getTitle(router.routerState, router.routerState.root).join('-');
-				this.titleService.setTitle(title === '' ? this.title : title);
+				this.titleService.setTitle(title === '' ? this.title : title + ' - ' + this.title);
 			} else if (event instanceof RouteConfigLoadStart) {
 				this.loading = true;
 			} else if (event instanceof RouteConfigLoadEnd) {

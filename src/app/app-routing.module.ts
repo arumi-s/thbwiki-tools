@@ -26,6 +26,10 @@ const routes: Routes = [
 		loadChildren: () => import('./tools/sort/sort.module').then(m => m.SortModule)
 	},
 	{
+		path: 'event',
+		loadChildren: () => import('./tools/event/event.module').then(m => m.EventModule)
+	},
+	{
 		path: 'tracks',
 		loadChildren: () => import('./tools/tracks/tracks.module').then(m => m.TracksModule)
 	},
