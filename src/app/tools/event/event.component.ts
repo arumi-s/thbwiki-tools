@@ -4,8 +4,10 @@ import naturalCompare from 'natural-compare';
 import DOMPurify from 'dompurify';
 
 const nameTest = /サークル名?|社團|circle/i;
-const boothTest = /配置|攤位/i;
-const siteTest = /url|Web|hp|ＨＰ|サイト/i;
+const boothTest = /スペース|SPACE|配置|攤位/i;
+const siteTest = /url|ＵＲＬ|Link|Web|hp|ＨＰ|サイト/i;
+
+const skipTest = /(社務所|実行委員会|予備|準備会|委員会|事故)(予備|)\s*(スペース|sp|space)/i;
 
 export interface BoothInfo {
 	booth?: string;
@@ -53,10 +55,10 @@ export class EventComponent implements OnInit {
 	onPaste(event: ClipboardEvent) {
 		const { clipboardData } = event;
 		const html = clipboardData?.getData('text/html');
-		if (html) {
+		if (this.input === '' && html) {
 			event.preventDefault();
-			(event.target as HTMLTextAreaElement).value = html;
-			this.changeInput(html);
+			console.log(html);
+			this.changeInput(html, true);
 		}
 	}
 
@@ -64,15 +66,40 @@ export class EventComponent implements OnInit {
 		this.changeInput((event.target as HTMLTextAreaElement).value);
 	}
 
-	changeInput(html: string) {
+	changeInput(html: string, isPaste = false) {
 		const newDom = new DOMParser().parseFromString('<body></body>', 'text/html');
-		const body = DOMPurify.sanitize(html, { RETURN_DOM: true });
+		const body = DOMPurify.sanitize(html, {
+			RETURN_DOM: true,
+			FORBID_ATTR: [
+				'style',
+				'align',
+				'alink',
+				'background',
+				'bgcolor',
+				'border',
+				'clear',
+				'height',
+				'hspace',
+				'language',
+				'link',
+				'nowrap',
+				'start',
+				'text',
+				'vlink',
+				'vspace',
+				'width'
+			],
+			FORBID_TAGS: ['style', 'iframe', 'frameset', 'embed', 'video', 'audio', 'object', 'template', 'form', 'input', 'textarea'],
+			ALLOW_DATA_ATTR: false
+		});
 		this.headerInfo = null;
 		const tables = this.selectTables(body);
 		tables.forEach(table => {
 			table.setAttribute('border', '1');
+			table.setAttribute('cellspacing', '0');
 			newDom.body.appendChild(table);
 		});
+		if (isPaste) this.input = prettifyXml(newDom);
 		this.doc = newDom.body;
 		this.boothList = ([] as Array<BoothInfo>).concat(...this.parseTables(tables));
 		const names = this.boothList.map(({ name }) => name);
@@ -80,7 +107,7 @@ export class EventComponent implements OnInit {
 		let match: RegExpMatchArray | null;
 		this.spaceCount = spaces.reduce(
 			(sum, space) =>
-				space != null && (match = space.match(/(\d+)\s*[\-\/\\~,，、／＼]\s*(\d+)/))
+				space != null && (match = space.match(/(\d+)\s*[,-]\s*(\d+)/))
 					? sum + 1 + Math.abs(parseInt(match[2], 10) - parseInt(match[1], 10))
 					: sum + 1,
 
@@ -110,6 +137,7 @@ export class EventComponent implements OnInit {
 		const result: Array<BoothInfo> = [];
 		const headers = matrix.filter(row => row.header);
 		let list: HeaderInfo | null = null;
+
 		for (let i = 0; i < headers.length; i++) {
 			const row = headers[i];
 			list = this.parseHeader(row);
@@ -117,11 +145,25 @@ export class EventComponent implements OnInit {
 		}
 		if (list == null) list = this.headerInfo;
 		if (list == null) {
-			const row = matrix[0];
-			list = this.parseHeader(row);
-			if (list == null) return [];
-			row.header = true;
+			let max = 0;
+			let maxRow: Row | null = null;
+			for (let j = 0; j < matrix.length; j++) {
+				const row = matrix[j];
+				const l = this.parseHeader(row);
+				if (l) {
+					const len = l.filter(t => t).length;
+					if (len > max) {
+						max = len;
+						maxRow = row;
+						list = l;
+					}
+				}
+			}
+			if (maxRow != null) {
+				maxRow.header = true;
+			}
 		}
+		if (list == null) return [];
 		const nameCol = list.findIndex(t => t === 'name');
 		const boothCol = list.findIndex(t => t === 'booth');
 		const siteCol = list.findIndex(t => t === 'site');
@@ -131,20 +173,36 @@ export class EventComponent implements OnInit {
 			const info: BoothInfo = {
 				site: []
 			};
+			let mainset = false;
 			for (let j = 0; j < row.length; j++) {
 				const cell = row[j];
 				if (j === nameCol) {
 					info.name = cell.text;
-					if (cell.link) info.site.push(cell.link);
+					if (cell.link) {
+						info.site = [cell.link];
+						mainset = true;
+					}
 				} else if (j === boothCol) {
 					info.booth = cell.text;
 				} else if (j === siteCol) {
-					if (cell.link) info.site.push(cell.link);
+					if (cell.link) {
+						info.site = [cell.link];
+						mainset = true;
+					} else if (cell.text.startsWith('http')) {
+						info.site = [cell.text];
+						mainset = true;
+					}
 				} else {
-					if (cell.link) info.site.push(cell.link);
+					if (cell.link && !mainset) info.site.push(cell.link);
 				}
 			}
-			if (info.name !== '') {
+			if (info.name != null && info.name !== '' && !skipTest.test(info.name)) {
+				if (info.booth)
+					info.booth = info.booth.replace(/(\d+)\s*[\-\/\\~\.・,，、／＼]\s*(\d+)/m, (_, b1, b2) => {
+						if (Math.abs(parseInt(b2, 10) - parseInt(b1, 10)) > 1) {
+							return `${b1}-${b2}`;
+						} else return `${b1},${b2}`;
+					});
 				result.push(info);
 			}
 		}
@@ -152,10 +210,22 @@ export class EventComponent implements OnInit {
 	}
 
 	parseHeader(header: Row): HeaderInfo | null {
-		const test = header.map(cell => {
-			if (nameTest.test(cell.text)) return 'name';
-			if (boothTest.test(cell.text)) return 'booth';
-			if (siteTest.test(cell.text)) return 'site';
+		let nameGot = false;
+		let boothGot = false;
+		let siteGot = false;
+		const test: HeaderInfo = header.map(cell => {
+			if (!nameGot && nameTest.test(cell.text)) {
+				nameGot = true;
+				return 'name';
+			}
+			if (!boothGot && boothTest.test(cell.text)) {
+				boothGot = true;
+				return 'booth';
+			}
+			if (!siteGot && siteTest.test(cell.text)) {
+				siteGot = true;
+				return 'site';
+			}
 			return null;
 		});
 		if (test.every(p => p === null)) return null;
@@ -170,7 +240,8 @@ export class EventComponent implements OnInit {
 			'|摊位 = \n' +
 			list
 				.map(booth => {
-					const website = booth.site[0] ?? null;
+					const website =
+						booth.site.length === 1 ? booth.site[0] : booth.site.find(url => url.indexOf('pixiv.') > -1) ?? booth.site[0] ?? '';
 					const type = website
 						? website.indexOf('pixiv.') > -1
 							? ' Pixiv'
@@ -241,7 +312,25 @@ function parseTable(table: HTMLElement): Array<Row> {
 	}
 	for (let i = 0; i < matrix.length; i++) {
 		const row = matrix[i];
-		row.header = row.some(cell => cell.header);
+		if (
+			row == null ||
+			(row.length > 1 && row.filter((cell, k, arr) => arr.findIndex(c2 => c2.node === cell.node) === k).length === 1)
+		) {
+			matrix.splice(i, 1);
+			--i;
+		} else {
+			row.header = row.some(cell => cell.header);
+		}
+	}
+	const headers = matrix.filter(row => row.header);
+	if (headers.length >= matrix.length - 1) {
+		matrix.forEach(row => {
+			row.header = false;
+		});
 	}
 	return matrix;
+}
+
+function prettifyXml(xmlDoc: Document) {
+	return xmlDoc.body.outerHTML.replace(/>\s*</g, '>\n<');
 }

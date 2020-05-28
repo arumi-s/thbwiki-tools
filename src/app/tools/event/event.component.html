@@ -1,12 +1,12 @@
 <div class="flex">
 	<div class="input">
-		贴上表格：
+		贴上表格：<button (click)="input = ''">清空</button>
 		<textarea rows="10" (paste)="onPaste($event)" [(ngModel)]="input" (input)="onInput($event)"></textarea>
 	</div>
 	<div class="virtual">
 		<app-event-preview [doc]="doc" #virtual></app-event-preview>
 	</div>
-	<div class="result">
+	<div class="label">
 		代码如下：
 		<button (click)="sortOutput()">排序</button>
 		<button [ngxClipboard]="resultText">复制</button>
@@ -14,6 +14,8 @@
 			<span class="count">摊位数量：{{ spaceCount }}</span>
 			<span class="count">社团数量：{{ circleCount }}</span>
 		</div>
+	</div>
+	<div class="result">
 		<textarea rows="20" [(ngModel)]="result" #resultText></textarea>
 	</div>
 </div>
