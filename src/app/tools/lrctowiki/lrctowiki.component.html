@@ -17,12 +17,14 @@
 
 <div>
 	在上方输入lrc文本然后按
-	<button (click)="convert()">转换</button>
+	<button (click)="convert()" gaEvent="convert" gaCategory="tools_lrctowiki">转换</button>
 	，wiki文本会在下方出现
 </div>
-<div>如果只是没有时间轴的普通文本，请按 <button (click)="convertsim()">普通转换</button></div>
 <div>
-	<button [ngxClipboard]="wikiText">复制</button>
+	如果只是没有时间轴的普通文本，请按 <button (click)="convertsim()" gaEvent="convertsim" gaCategory="tools_lrctowiki">普通转换</button>
+</div>
+<div>
+	<button [ngxClipboard]="wikiText" gaEvent="copy" gaCategory="tools_lrctowiki">复制</button>
 </div>
 <textarea rows="30" cols="80" [(ngModel)]="wiki" #wikiText></textarea>
 <div>

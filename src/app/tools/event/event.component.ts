@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { EventPreviewComponent } from './event-preview/event-preview.component';
 import naturalCompare from 'natural-compare';
 import DOMPurify from 'dompurify';
@@ -48,7 +49,7 @@ export class EventComponent implements OnInit {
 	spaceCount = 0;
 	circleCount = 0;
 
-	constructor() {}
+	constructor(private gaService: GoogleAnalyticsService) {}
 
 	ngOnInit(): void {}
 
@@ -57,8 +58,9 @@ export class EventComponent implements OnInit {
 		const html = clipboardData?.getData('text/html');
 		if (this.input === '' && html) {
 			event.preventDefault();
-			console.log(html);
 			this.changeInput(html, true);
+
+			this.gaService.event('paste', 'tools_event');
 		}
 	}
 

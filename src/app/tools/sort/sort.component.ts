@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import pinyin from 'chinese-to-pinyin';
 import naturalCompare from 'natural-compare';
 
@@ -56,7 +57,7 @@ export class SortComponent implements OnInit {
 	templates: Array<WikiTemplate> = [];
 	text = '';
 
-	constructor() {}
+	constructor(private gaService: GoogleAnalyticsService) {}
 
 	ngOnInit(): void {}
 
@@ -78,6 +79,8 @@ export class SortComponent implements OnInit {
 				return text + template.text;
 			})
 			.join('\n');
+
+		this.gaService.event('sort', 'tools_sort', `${this.method}|${this.name}`);
 	}
 
 	updateParams() {

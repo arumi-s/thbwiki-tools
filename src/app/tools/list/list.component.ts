@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import naturalCompare from 'natural-compare';
 
 type Action = (list: Array<string>) => Array<string>;
@@ -45,13 +46,14 @@ export class ListComponent implements OnInit {
 	name = '';
 	text = '';
 
-	constructor() {}
+	constructor(private gaService: GoogleAnalyticsService) {}
 
 	ngOnInit(): void {}
 
 	pipe(name: string) {
 		if (Actions.hasOwnProperty(name)) {
 			this.text = Actions[name](this.text.split(/\r?\n/)).join('\n');
+			this.gaService.event(name, 'tools_list');
 		}
 	}
 }

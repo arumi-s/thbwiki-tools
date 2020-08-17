@@ -15,6 +15,7 @@ function readArrayBuffer(file: File | Blob): Promise<ArrayBuffer> {
 export async function readFile(file: File) {
 	const title = file.name;
 	let duration = -1;
+	let type = '';
 	if (file.name.toLowerCase().endsWith('.cue')) {
 		const buffer = await readArrayBuffer(file);
 		const stream = AV.Stream.fromBuffer(new AV.Buffer(buffer));
@@ -23,6 +24,7 @@ export async function readFile(file: File) {
 	if (new Audio().canPlayType(file.type) !== '') {
 		try {
 			duration = await readNative(file);
+			type = file.type.replace('audio/', '');
 		} catch (e) {
 			duration = -1;
 		}
@@ -34,28 +36,34 @@ export async function readFile(file: File) {
 		switch (sniff) {
 			case 'fLaC':
 				duration = readFLAC(stream);
+				type = 'flac';
 				break;
 			case 'TTA1':
 				duration = readTTA(stream);
+				type = 'tta';
 				break;
 			case 'RIFF':
 				duration = readWAV(stream);
+				type = 'wav';
 				break;
 			default:
 				if (probeAIFF(stream)) {
 					duration = readAIFF(stream);
+					type = 'aiff';
 					break;
 				}
 				if (probeM4A(stream)) {
 					duration = readM4A(stream);
+					type = 'm4a';
 					break;
 				}
 				console.log('Unknown Format: ' + sniff);
+				type = title.substr(1 + title.lastIndexOf('.')).substr(0, 5);
 				break;
 		}
 	}
 	if (duration >= 0) {
-		return new Track(title, Math.round(duration));
+		return new Track(title, Math.round(duration), type);
 	}
 	return null;
 }

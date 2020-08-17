@@ -27,6 +27,6 @@
 	</div>
 </div>
 <div class="result">
-	列表：<button [ngxClipboard]="resultText">复制</button>
+	列表：<button [ngxClipboard]="resultText" gaEvent="copy" gaCategory="tools_list">复制</button>
 	<textarea type="text" rows="50" [(ngModel)]="text" #resultText></textarea>
 </div>

@@ -6,7 +6,7 @@
 			<button *ngFor="let sug of circleSuggest$ | async" class="dropdown-item" (click)="selectSuggest($event, sug)">{{ sug }}</button>
 		</div>
 	</div>
-	<button (click)="query()">查询</button>
+	<button (click)="query()" gaEvent="query" gaCategory="tools_circlelyrics">查询</button>
 </div>
 <ul>
 	<li *ngFor="let page of list">

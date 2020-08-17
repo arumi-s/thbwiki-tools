@@ -15,6 +15,6 @@
 <div class="result">
 	模板列表：
 	<button (click)="sort()">排序</button>
-	<button [ngxClipboard]="resultText">复制</button>
+	<button [ngxClipboard]="resultText" gaEvent="copy" gaCategory="tools_sort">复制</button>
 	<textarea type="text" rows="50" [(ngModel)]="text" #resultText (change)="updateParams()"></textarea>
 </div>

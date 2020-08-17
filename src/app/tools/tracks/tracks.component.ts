@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { readFile } from './track-reader';
 import { Track, Cue, supportFormats } from './media-formats';
 
@@ -30,7 +31,7 @@ export class TracksComponent implements OnInit {
 	loadingProgress = 0;
 	wikitext = '';
 
-	constructor() {}
+	constructor(private gaService: GoogleAnalyticsService) {}
 
 	ngOnInit(): void {}
 
@@ -53,9 +54,15 @@ export class TracksComponent implements OnInit {
 				}
 			} catch (e) {
 				this.logIn('读取文件失败');
+				this.gaService.event('drop_fail', 'tools_tracks');
 				console.log(e);
 				return;
 			}
+
+			const formats = tracks.map(track => track.type);
+			if (cues.length) formats.unshift('cue');
+			this.gaService.event('drop_type', 'tools_tracks', formats.filter((v, i, a) => a.indexOf(v) === i).join(','));
+
 			for (let index = 0; index < cues.length; index++) {
 				const data = cues[index];
 				const match = tracks.findIndex(track => track instanceof Track && track.title === data.file);

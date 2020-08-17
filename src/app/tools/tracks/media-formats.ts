@@ -5,7 +5,7 @@ import { EncodingDetect } from './encoding-detect';
 // tslint:disable: no-bitwise
 
 export class Track {
-	constructor(public title = '', public duration = -1) {}
+	constructor(public title = '', public duration = -1, public type = '') {}
 
 	getTime() {
 		return (

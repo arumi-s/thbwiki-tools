@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TextcolorComponent } from './textcolor.component';
 import { TextcolorRoutingModule } from './textcolor-routing.module';
-import { PickrDirective } from 'src/app/directives/pickr.directive';
-import { SafehtmlPipe } from 'src/app/pipes/safehtml.pipe';
+import { PickrDirective } from '../../directives/pickr.directive';
+import { SafehtmlPipe } from '../../pipes/safehtml.pipe';
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 
 @NgModule({
 	declarations: [TextcolorComponent, PickrDirective, SafehtmlPipe],
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, ClipboardModule, TextcolorRoutingModule]
+	imports: [CommonModule, FormsModule, NgxGoogleAnalyticsModule, ReactiveFormsModule, ClipboardModule, TextcolorRoutingModule]
 })
 export class TextcolorModule {}

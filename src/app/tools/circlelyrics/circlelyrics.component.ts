@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { WikiApiService, SMWWikiPageValue } from 'src/app/services/wiki-api.service';
+import { WikiApiService, SMWWikiPageValue } from '../../services/wiki-api.service';
 import { map, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
 
 interface LyricsPage {

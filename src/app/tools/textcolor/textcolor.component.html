@@ -20,7 +20,7 @@
 </div>
 <div class="result">
 	代码如下：
-	<button [ngxClipboard]="resultText">复制</button>
+	<button [ngxClipboard]="resultText" gaEvent="copy" gaCategory="tools_textcolor">复制</button>
 	<textarea type="text" rows="10" [(ngModel)]="result" #resultText></textarea>
 </div>
 预览效果：

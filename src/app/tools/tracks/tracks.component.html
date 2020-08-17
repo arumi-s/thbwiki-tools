@@ -30,8 +30,8 @@
 	</tbody>
 </table>
 <div class="result">
-	<button class="insert" (click)="insert()">自动填写时长</button>
-	<button class="copy" [ngxClipboard]="resultText">复制Wiki代码</button>
-	<button class="clear" (click)="clear()">重置</button>
+	<button class="insert" (click)="insert()" gaEvent="insert" gaCategory="tools_tracks">自动填写时长</button>
+	<button class="copy" [ngxClipboard]="resultText" gaEvent="copy" gaCategory="tools_tracks">复制Wiki代码</button>
+	<button class="clear" (click)="clear()" gaEvent="clear" gaCategory="tools_tracks">重置</button>
 	<textarea type="text" rows="20" [(ngModel)]="wikitext" #resultText></textarea>
 </div>
