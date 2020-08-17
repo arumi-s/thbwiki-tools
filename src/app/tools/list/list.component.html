@@ -1,0 +1,32 @@
+<div class="actions">
+	<div class="row">
+		转换：
+		<button (click)="pipe('trim')">trim</button>
+		<button (click)="pipe('lowercase')">lowercase</button>
+		<button (click)="pipe('uppercase')">uppercase</button>
+		<button (click)="pipe('uppercaseword')">uppercaseword</button>
+	</div>
+	<div class="row">
+		排序：
+		<button (click)="pipe('sort')">sort</button>
+		<button (click)="pipe('natural_sort')">natural_sort</button>
+		<button (click)="pipe('reverse')">reverse</button>
+		<button (click)="pipe('shuffle')">shuffle</button>
+	</div>
+	<div class="row">
+		统计：
+		<button (click)="pipe('count')">count</button>
+	</div>
+	<div class="row">
+		筛选：
+		<button (click)="pipe('remove_empty')">remove_empty</button>
+		<button (click)="pipe('keep_number')">keep_number</button>
+		<button (click)="pipe('keep_ascii')">keep_ascii</button>
+		<button (click)="pipe('keep_duplicate')">keep_duplicate</button>
+		<button (click)="pipe('keep_unique')">keep_unique</button>
+	</div>
+</div>
+<div class="result">
+	列表：<button [ngxClipboard]="resultText">复制</button>
+	<textarea type="text" rows="50" [(ngModel)]="text" #resultText></textarea>
+</div>

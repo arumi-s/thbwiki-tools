@@ -56,7 +56,7 @@ export class LrctowikiComponent implements OnInit {
 		const canzh = this.language !== 'zh' && trans.length > 0 && trans[0] !== '';
 		if (lines.length && lines[0] !== '') {
 			this.wiki =
-				(this.language == 'zh' ? '__LYRICSZH__' : '__LYRICS__') +
+				(this.language === 'zh' ? '__LYRICSZH__' : '__LYRICS__') +
 				'\n\n{{歌词信息|\n| 语言 = \n| 翻译 = ' +
 				(canzh ? '中文' : '') +
 				'\n| 译者 = \n}}\n\nlyrics=\n';
