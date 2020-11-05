@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { environment } from '../environments/environment';
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
+		AngularSvgIconModule.forRoot(),
 		NgxGoogleAnalyticsModule.forRoot(environment.ga),
 		NgxGoogleAnalyticsRouterModule
 	],

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd, RouterState, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
+import { SvgIconRegistryService } from 'angular-svg-icon';
 
 @Component({
 	selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent {
 	loading = false;
 	title = 'THBWiki工具箱';
 
-	constructor(public titleService: Title, router: Router) {
+	constructor(public titleService: Title, router: Router, private iconReg: SvgIconRegistryService) {
+		this.addIcons('github', 'tracks', 'calline', 'lrctowiki', 'circlelyrics', 'event', 'sort', 'list', 'textcolor');
 		router.events.subscribe((event: NavigationEnd | RouteConfigLoadStart | RouteConfigLoadEnd) => {
 			if (event instanceof NavigationEnd) {
 				const title = this.getTitle(router.routerState, router.routerState.root).join('-');
@@ -22,6 +24,10 @@ export class AppComponent {
 				this.loading = false;
 			}
 		});
+	}
+
+	addIcons(...names: Array<string>) {
+		names.forEach(name => this.iconReg.addSvg(name, require('!!raw-loader?!./icons/' + name + '.svg').default as string));
 	}
 
 	getTitle(state: RouterState, parent: ActivatedRoute | null) {
