@@ -1,0 +1,44 @@
+.drop {
+	display: inline-block;
+	padding: 2em 10em;
+	border: 2px dotted #a9a9a9;
+	user-select: none;
+	cursor: pointer;
+	&.dragging {
+		cursor: grab;
+		cursor: grabbing;
+		border-color: red;
+	}
+	input {
+		display: none;
+	}
+}
+
+.text-fields {
+	padding: 0.5em 0;
+	display: flex;
+}
+
+.text-field {
+	flex: 1;
+}
+
+.btn-download {
+	margin-left: 20px;
+}
+
+.images {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.crop {
+	overflow: hidden;
+	display: block;
+	position: relative;
+	margin: 5px;
+
+	img {
+		position: absolute;
+	}
+}

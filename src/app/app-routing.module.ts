@@ -42,6 +42,10 @@ const routes: Routes = [
 		loadChildren: () => import('./tools/circlelyrics/circlelyrics.module').then(m => m.CirclelyricsModule)
 	},
 	{
+		path: 'crop',
+		loadChildren: () => import('./tools/crop/crop.module').then(m => m.CropModule)
+	},
+	{
 		path: '**',
 		canActivate: [RedirectGuard],
 		component: HomeComponent
@@ -49,7 +53,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {}

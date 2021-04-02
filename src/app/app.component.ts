@@ -13,7 +13,7 @@ export class AppComponent {
 	title = 'THBWiki工具箱';
 
 	constructor(public titleService: Title, router: Router, private iconReg: SvgIconRegistryService) {
-		this.addIcons('github', 'tracks', 'calline', 'lrctowiki', 'circlelyrics', 'event', 'sort', 'list', 'textcolor');
+		this.addIcons('github', 'tracks', 'calline', 'lrctowiki', 'circlelyrics', 'event', 'sort', 'crop', 'list', 'textcolor');
 		router.events.subscribe((event: NavigationEnd | RouteConfigLoadStart | RouteConfigLoadEnd) => {
 			if (event instanceof NavigationEnd) {
 				const title = this.getTitle(router.routerState, router.routerState.root).join('-');

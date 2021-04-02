@@ -1,0 +1,32 @@
+<label class="drop" dropfile (input)="addFiles($event)" accept="image/*" [multiple]="true" [allow]="allowImageType">
+	拖放或选取图片
+</label>
+<div class="text-field">
+	<label for="param-name">数量：</label>
+	{{ images.length }}
+	<button class="btn-clear" (click)="clear()" gaEvent="clear" gaCategory="tools_crop">清空</button>
+	<button
+		class="btn-download"
+		(click)="download()"
+		[attr.disabled]="downloading ? 'disabled' : null"
+		gaEvent="download"
+		gaCategory="tools_crop"
+	>
+		打包下载
+	</button>
+</div>
+<div class="text-field">
+	<label for="param-name">区域：</label>
+	<input type="number" min="0" step="1" max="10000" [(ngModel)]="left" />
+	<input type="number" min="0" step="1" max="10000" [(ngModel)]="top" />
+	<input type="number" min="0" step="1" max="10000" [(ngModel)]="width" />
+	<input type="number" min="0" step="1" max="10000" [(ngModel)]="height" />
+</div>
+
+<div class="images">
+	<div *ngFor="let image of images; let index = index">
+		<div class="crop" [style.width.px]="width" [style.height.px]="height">
+			<img [src]="image.src | safeurl" [style.left.px]="-left" [style.top.px]="-top" />
+		</div>
+	</div>
+</div>
