@@ -1,27 +1,15 @@
 # THBWiki Tools
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
+A Toolbox for THBWiki related tasks.
 
-## Development server
+Available Tools:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+-   [Fill track template using audio files (曲目时长填写工具)](https://tool.thwiki.cc/tracks)
+-   [Calculator Width of images when scaled to same height (图片边长计算)](https://tool.thwiki.cc/calline)
+-   [Crop image for Touhou stg screenshots (图片剪裁)](https://tool.thwiki.cc/crop)
+-   [Lyrics file to wiki page (歌词文本转换)](https://tool.thwiki.cc/lrctowiki)
+-   [Lyrics progress of each circle (社团歌词进度)](https://tool.thwiki.cc/circlelyrics)
+-   [Convert table to booth template (展会摊位列表转换)](https://tool.thwiki.cc/event)
+-   [Sort templates by parameter (模板列表排序)](https://tool.thwiki.cc/sort)
+-   [List processing (列表处理)](https://tool.thwiki.cc/list)
+-   [Gradient text generator (渐变色彩文字代码生成器)](https://tool.thwiki.cc/textcolor)
